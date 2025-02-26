@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origins: ["http://localhost:5173","yosephalemu.vercel.app"] })); 
+app.use(cors({ origins: ["http://localhost:5173","https://yosephalemu.vercel.app/"] })); 
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
