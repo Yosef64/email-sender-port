@@ -32,7 +32,9 @@ async def send_email(request:Request):
     except Exception as e:
         return JSONResponse({"message":e},status_code=500)
     
-    
+@app.get("/")
+async def index(request:Request):
+    return {"message":"ok"}
     
 
 
