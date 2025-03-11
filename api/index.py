@@ -10,7 +10,7 @@ app = FastAPI()
 key = os.getenv("APP_KEY","hxqp eito aaud eslj")
 
 origins = [
-    "https://victory-contest.vercel.app",
+    "https://yosephalemu.vercel.app",
     "http://localhost:5173"
 ]
 
