@@ -28,13 +28,24 @@ app.add_middleware(
 async def send_email(request: Request):
     data = await request.json()
     message = data.get("message")
+    name = data.get("name")
+    email = data.get("email")
+    subject = data.get("subject")
+    final_message = f"Name: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}"
+#     {
+#     name: string;
+#     email: string;
+#     subject: string;
+#     message: string;
+# }
+
    
     try:
 
         url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
         payload = {
             'chat_id': chat_id,
-            'text': message
+            'text': final_message
         }
         
         response = requests.post(url, data=payload)
