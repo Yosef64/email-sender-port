@@ -31,7 +31,7 @@ async def send_email(request: Request):
     name = data.get("name")
     email = data.get("email")
     subject = data.get("subject")
-    final_message = f"Name: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}"
+    final_message = f"New message from {name}\n\nEmail: {email}\nSubject: {subject}\nMessage: {message}"
 #     {
 #     name: string;
 #     email: string;
