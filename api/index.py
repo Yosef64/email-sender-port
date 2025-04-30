@@ -8,7 +8,8 @@ import smtplib
 
 app = FastAPI()
 key = os.getenv("APP_KEY","hxqp eito aaud eslj")
-
+bot_token = os.getenv("BOT_TOKEN", "")
+chat_id = os.getenv("CHAT_ID", "")
 origins = [
     "https://yosephalemu.vercel.app",
     "http://localhost:5173"
@@ -25,22 +26,24 @@ app.add_middleware(
 @app.post("/send-email")
 async def send_email(request: Request):
     data = await request.json()
-    print(key)
+    message = data.get("message")
+   
     try:
-        email, subject, message, name = data['email'], data['subject'], data['message'], data['name']
-        msg = MIMEMultipart()
-        msg["From"] = "yosefale65@gmail.com"
-        msg["To"] = email
-        msg["Subject"] = subject
-        msg.attach(MIMEText(f"From: {name}\n\n{message}", "plain"))
 
+        url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+        payload = {
+            'chat_id': chat_id,
+            'text': message
+        }
         
-        server = smtplib.SMTP("smtp.gmail.com")
-        server.starttls()
-        server.login("yosefale65@gmail.com", key)
-        server.sendmail("yosefale65@gmail.com", email, msg.as_string())
-        server.quit()
-    
+        response = requests.post(url, data=payload)
+        
+        if response.status_code == 200:
+            print("Message sent successfully")
+            return JSONResponse({"message": "Message sent successfully"}, status_code=200)
+        else:
+            print("Failed to send message")
+            return JSONResponse({"message": "Failed to send message"}, status_code=500)
     except KeyError:
         return JSONResponse({"message": "Missing required fields"}, status_code=400)
     except smtplib.SMTPAuthenticationError:
